@@ -7,18 +7,23 @@ import (
 	"github.com/awslabs/aws-lambda-go-api-proxy/httpadapter"
 )
 
-// API Endpoint Handler
 func helloHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
+	w.Write([]byte(`{"status": "success", "message": "Welcome to Go Test API on Netlify!"}`))
+}
 
-	// JSON Response
-	w.Write([]byte(`{"status": "success", "message": "Hello! Your Go API is running on Netlify!"}`))
+func statusHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte(`{"server": "online", "language": "Go (Golang)"}`))
 }
 
 func main() {
+	// http.HandleFunc diye regular routing mesh setup kora holo
 	http.HandleFunc("/api/hello", helloHandler)
+	http.HandleFunc("/api/status", statusHandler)
 
-	// net/http রাউটারটিকে AWS Lambda (Netlify) এর উপযোগী করে প্রক্সি করা হচ্ছে
+	// Lambda handle korar jonno net/http standard mux proxy kora holo
 	lambda.Start(httpadapter.New(http.DefaultServeMux).Proxy)
 }
