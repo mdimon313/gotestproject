@@ -1,0 +1,9 @@
+[build]
+  # প্রজেক্ট বিল্ড করার কমান্ড (Go কোড লিনাক্স বাইনারিতে বিল্ড করা)
+  command = "go get ./... && GOOS=linux go build -o netlify/functions/api functions/api/main.go"
+  
+  # পাবলিক ফোল্ডার (যদি স্ট্যাটিক ওয়েবসাইট না থাকে, তবে একটি খালি ফোল্ডার বা 'public' দিতে পারেন)
+  publish = "public"
+  
+  # বিল্ড করা ফাংশনগুলো এই ফোল্ডারে জমা হবে
+  functions = "netlify/functions"
